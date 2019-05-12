@@ -24,12 +24,27 @@ public class StrProc
 					if((ds.getChatText().length()-i) >= BWTable.Table[(int)(ds.getChatText().charAt(i))].get(j).length())
 						//the left characters are not enough to become a selected bad word.
 					{
+						int h=0;
 						int count=1;
 						for(int k=1; k<BWTable.Table[(int)(ds.getChatText().charAt(i))].get(j).length(); k++)
 							//compare input strings with selected bad word
 						{
-							if(BWTable.Table[(int)(ds.getChatText().charAt(i))].get(j).charAt(k) != ds.getChatText().charAt(i+k) )
+							while(	(ds.getChatText().charAt(i+k+h)>=' ' && ds.getChatText().charAt(i+k+h)<='@')
+									||(ds.getChatText().charAt(i+k+h)>='[' && ds.getChatText().charAt(i+k+h)<='`')
+									||(ds.getChatText().charAt(i+k+h)>='{' && ds.getChatText().charAt(i+k+h)<='~') )
 							{
+								h++;
+								if(ds.getChatText().length()<=(i+k+h))
+									break;
+							}
+							if(ds.getChatText().length()<=(i+k+h))
+							{
+								//System.out.println("break1");
+								break;
+							}
+							if(BWTable.Table[(int)(ds.getChatText().charAt(i))].get(j).charAt(k) != ds.getChatText().charAt(i+k+h) )
+							{
+								//System.out.println("break2");
 								break;
 							}
 							else
