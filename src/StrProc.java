@@ -15,28 +15,29 @@ public class StrProc
 	{
 		ds.setIsBadword(false);
 		
-		for(int i=0; i<ds.getChatText().length(); i++)
+		for(int i=0; i<ds.getChatText().length(); i++) //repeat for input string size times
 		{
-			if(BWTable.Table[ds.getChatText().charAt(i)].size()!=0) 
+			if(BWTable.Table[(int)(ds.getChatText().charAt(i))].size()!=0) //Is there a bad word which have input(i) for first character?
 			{
-				//BWTable.Table[ds.getChatText().charAt(i)] : 해당글자로시작하는 스트링들의 어레이리스트
-				for(int j=0; j<BWTable.Table[ds.getChatText().charAt(i)].size(); j++) //해당 글자로 시작하는 어레이리스트의 사이즈만큼 돈다
+				for(int j=0; j<BWTable.Table[(int)(ds.getChatText().charAt(i))].size(); j++) // repeat for Table[input(i)]'s size times
 				{
-					if((ds.getChatText().length()-i) >= BWTable.Table[ds.getChatText().charAt(i)].get(j).length()) //남은 글자가 비교대상 사이즈보다 크거나같으면
+					if((ds.getChatText().length()-i) >= BWTable.Table[(int)(ds.getChatText().charAt(i))].get(j).length())
+						//the left characters are not enough to become a selected bad word.
 					{
 						int count=1;
-						for(int k=1; k<BWTable.Table[ds.getChatText().charAt(i)].get(j).length(); k++) //j번째  단어의 길이만큼 반복
+						for(int k=1; k<BWTable.Table[(int)(ds.getChatText().charAt(i))].get(j).length(); k++)
+							//compare input strings with selected bad word
 						{
-							//BWTable.Table[ds.getChatText().charAt(i)].get(j) : 그 어레이리스트의 j번째 단어
-							if(BWTable.Table[ds.getChatText().charAt(i)].get(j).charAt(k) != ds.getChatText().charAt(i+k) )
+							if(BWTable.Table[(int)(ds.getChatText().charAt(i))].get(j).charAt(k) != ds.getChatText().charAt(i+k) )
 							{
 								break;
 							}
 							else
 								count++;
 						}
-						if (count== BWTable.Table[ds.getChatText().charAt(i)].get(j).length()) //모든글자가 맞음
+						if (count== BWTable.Table[(int)(ds.getChatText().charAt(i))].get(j).length())
 						{
+							System.out.println(BWTable.Table[(int)(ds.getChatText().charAt(i))].get(j)); //searched bad word
 							ds.setIsBadword(true);
 							return;
 						}
