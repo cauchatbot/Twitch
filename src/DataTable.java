@@ -153,6 +153,7 @@ public class DataTable
 	public void AddToNamedList(Vector<String> newUser)
 	{
 		File file = new File("NAMED.txt");
+		FileWriter writer = null;
 		for(int i = 0; i < newUser.size(); i++){
 			int index = namedList.indexOf(newUser.get(i));
 	    	if(index == -1)
@@ -241,6 +242,7 @@ public class DataTable
 
 	public void AddToURLList(Vector<String> newURL){
 		File file = new File("URL.txt");
+		FileWriter writer = null;
 		for(int i = 0; i < newURL.size(); i++){
 			int index = safeURLList.indexOf(newURL.get(i));
 	    	if(index == -1)
@@ -277,10 +279,10 @@ public class DataTable
 		
 		for(int i = 0; i < deleteURL.size(); i++)
 		{
-	    	int index = SafeURLList.indexOf(deleteURL.get(i));
+	    	int index = safeURLList.indexOf(deleteURL.get(i));
 	    	if(index != -1)
 	    	{
-				SafeURLList.remove(deleteURL.get(i));	
+				safeURLList.remove(deleteURL.get(i));	
 			}
 		}
 		
