@@ -55,6 +55,38 @@ public class DataTable
 	        System.out.println(e);
 	    }
 	}
+	public void AddToBWTable(String newWord)
+	{
+		FileWriter writer = null;
+		File file = new File("BADWORD.txt");
+		
+	    int index = BWTable[newWord.charAt(0)].indexOf(newWord);
+	   	if(index == -1)
+	   	{
+			try
+			{
+				writer = new FileWriter(file, true);
+				writer.write(newWord + "\n");
+				writer.flush();
+			}
+			catch(IOException e)
+			{
+				e.printStackTrace();
+			}
+			finally
+			{
+				try
+				{
+					if(writer != null) writer.close();
+				}
+				catch(IOException e)
+				{
+					e.printStackTrace();
+				}
+			}
+		}
+		this.SetBWTable();
+	}
 	public void AddToBWTable(Vector<String> newWords)
 	{
 		FileWriter writer = null;
@@ -91,6 +123,33 @@ public class DataTable
 		this.SetBWTable();
 	}
 	
+	public void DeleteFromBWTable(String deleteWord)
+	{
+		File file = new File("BADWORD.txt");
+		
+		int index = BWTable[(int)(deleteWord.charAt(0))].indexOf(deleteWord);
+		if(index != -1)
+    	{
+			BWTable[(int)(deleteWord.charAt(0))].remove(deleteWord);	
+		}
+		try
+		{
+			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+			for(int i = 0; i < 65536; i++)
+			{
+				for(int j = 0; j < BWTable[i].size(); j++)
+				{
+					writer.write(BWTable[i].get(j));
+					writer.newLine();
+					writer.flush();
+				}
+			}
+			writer.close();
+		}
+		catch(IOException e)
+		{
+		}		
+	}
 	public void DeleteFromBWTable(Vector<String> deleteWords)
 	{
 		File file = new File("BADWORD.txt");
@@ -106,7 +165,7 @@ public class DataTable
 		
 		try
 		{
-			BufferedWriter writer = new BufferedWriter(new FileWriter("BADWORD.txt", true));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 			for(int i = 0; i < 65536; i++)
 			{
 				for(int j = 0; j < BWTable[i].size(); j++)
@@ -149,7 +208,37 @@ public class DataTable
 	    }
 	}
 
-
+	public void AddToNamedList(String newUser)
+	{
+		File file = new File("NAMED.txt");
+		FileWriter writer = null;
+		int index = namedList.indexOf(newUser);
+	    if(index == -1)
+	    {
+			try
+			{
+				writer = new FileWriter(file, true);
+				writer.write(newUser + "\n");
+				writer.flush();
+			}
+			catch(IOException e)
+			{
+				e.printStackTrace();
+			}
+			finally
+			{
+				try
+				{
+					if(writer != null) writer.close();
+				}
+				catch(IOException e)
+				{
+					e.printStackTrace();
+				}
+			}
+		}
+		this.SetNamedList();
+	}
 	public void AddToNamedList(Vector<String> newUser)
 	{
 		File file = new File("NAMED.txt");
@@ -184,6 +273,32 @@ public class DataTable
 		this.SetNamedList();
 	}
 
+	public void DeleteFromNamedList(String deleteUser)
+	{
+		File file = new File("NAMED.txt");
+		
+	    int index = namedList.indexOf(deleteUser);
+	    if(index != -1)
+	    {
+			namedList.remove(deleteUser);	
+		}
+	    
+		try
+		{
+			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+
+			for(int j = 0; j < namedList.size(); j++)
+			{
+				writer.write(namedList.get(j));
+				writer.newLine();
+				writer.flush();
+			}
+			writer.close();
+		}
+		catch(IOException e)
+		{
+		}		
+	}
 	public void DeleteFromNamedList(Vector<String> deleteUser)
 	{
 		File file = new File("NAMED.txt");
@@ -199,7 +314,7 @@ public class DataTable
 		
 		try
 		{
-			BufferedWriter writer = new BufferedWriter(new FileWriter("NAMED.txt", true));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 
 			for(int j = 0; j < namedList.size(); j++)
 			{
@@ -240,10 +355,44 @@ public class DataTable
 	    }
 	}
 
-	public void AddToURLList(Vector<String> newURL){
+	public void AddToURLList(String newURL)
+	{
 		File file = new File("URL.txt");
 		FileWriter writer = null;
-		for(int i = 0; i < newURL.size(); i++){
+	
+		int index = safeURLList.indexOf(newURL);
+	    if(index == -1)
+	    {
+			try
+			{
+				writer = new FileWriter(file, true);
+				writer.write(newURL + "\n");
+				writer.flush();
+			}
+			catch(IOException e)
+			{
+				e.printStackTrace();
+			}
+			finally
+			{
+				try
+				{
+					if(writer != null) writer.close();
+				}
+				catch(IOException e)
+				{
+					e.printStackTrace();
+				}
+			}
+	    }
+		this.SetSafeURLList();
+	}
+	public void AddToURLList(Vector<String> newURL)
+	{
+		File file = new File("URL.txt");
+		FileWriter writer = null;
+		for(int i = 0; i < newURL.size(); i++)
+		{
 			int index = safeURLList.indexOf(newURL.get(i));
 	    	if(index == -1)
 	    	{
@@ -273,6 +422,32 @@ public class DataTable
 		this.SetSafeURLList();
 	}
 
+	public void DeleteFromURLList(String deleteURL)
+	{
+		File file = new File("URL.txt");
+		
+
+	    int index = safeURLList.indexOf(deleteURL);
+	    if(index != -1)
+	    {
+			safeURLList.remove(deleteURL);	
+		}
+		
+		try
+		{
+			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+			for(int j = 0; j < safeURLList.size(); j++)
+			{
+				writer.write(safeURLList.get(j));
+				writer.newLine();
+				writer.flush();
+			}
+			writer.close();
+		}
+		catch(IOException e)
+		{
+		}	
+	}
 	public void DeleteFromURLList(Vector<String> deleteURL)
 	{
 		File file = new File("URL.txt");
@@ -288,7 +463,7 @@ public class DataTable
 		
 		try
 		{
-			BufferedWriter writer = new BufferedWriter(new FileWriter("URL.txt", true));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 			for(int j = 0; j < safeURLList.size(); j++)
 			{
 				writer.write(safeURLList.get(j));

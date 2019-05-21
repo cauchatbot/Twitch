@@ -13,13 +13,23 @@ DataTable
 	DataProc.getDataTable.SetSafeURLList();
 		 : "BADWORD.txt", "NAMED.txt", "URL.txt"를 줄 단위로 읽어와 어레이리스트를 작성한다.
 	
+	DataProc.getDataTable.AddToBWTable(String newWord);
 	DataProc.getDataTable.AddToBWTable(Vector<String> newWords);
+
+	DataProc.getDataTable.AddToNamedList(String newUser);
 	DataProc.getDataTable.AddToNamedList(Vector<String> newUser);
+
+	DataProc.getDataTable.AddToURLList(String newURL);
 	DataProc.getDataTable.AddToURLList(Vector<String> newURL);
 		: 각각의 리스트에 String들이 있는지 확인하고, 없을 시 추가한다. / 텍스트파일에도 추가한다.
 
+	DataProc.getDataTable.DeleteFromBWTable(String deleteWord);
 	DataProc.getDataTable.DeleteFromBWTable(Vector<String> deleteWords);
+
+	DataProc.getDataTable.DeleteFromNamedList(String deleteUser);
 	DataProc.getDataTable.DeleteFromNamedList(Vector<String> deleteUser);
+
+	DataProc.getDataTable.DeleteFromURLList(String deleteURL);
 	DataProc.getDataTable.DeleteFromURLList(Vector<String> deleteURL);
 		: 각각의 리스트에 String들이 있는지 확인하고, 있을 시 삭제한다. / 텍스트파일에서도 삭제한다.
 

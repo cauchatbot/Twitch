@@ -16,9 +16,8 @@ public class ChatProc
 	{
 		ds = inputds;
 		checkUser();
-		ds.setIsBadword(false);
-		checkUser();
-		checkBadword();
+		if(!checkSpamImoji())
+			checkBadword();
 		if(ds.getIsNamed())
 		{
 			System.out.println("네임드당");
@@ -36,6 +35,7 @@ public class ChatProc
 			System.out.println("ok");
 		}
 	}
+	
 	private void checkUser()
 	{
 		if(tb.getNamedList().contains(ds.getUserID()))
@@ -49,6 +49,19 @@ public class ChatProc
 				//havetodisplay_named가 true인 경우, ui쪽에서 입장 표시 출력해주어야함
 			}
 		}
+	}
+	
+	public boolean checkUser(String userID)
+	{
+		if(tb.getNamedList().contains(userID))
+		{
+			if(!tb.getMyList().contains(userID))
+			{
+				tb.getMyList().add(ds.getUserID());
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	private void checkBadword()
@@ -131,6 +144,27 @@ public class ChatProc
 				}
 				if(count==tb.getSafeURLList().get(i).length())
 					return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean checkSpamImoji()
+	{
+		if (ds.getChatText().length()>=30)
+		{
+			int count = 0;
+			for(int i=0; i<ds.getChatText().length(); i++)
+			{
+				if(((int)(ds.getChatText().charAt(i)))>=9472 && ((int)(ds.getChatText().charAt(i))<=9999))
+				{
+					count++;
+				}
+			}
+			if(count>=20)
+			{
+				ds.setIsBadword(true);
+				return true;
 			}
 		}
 		return false;
